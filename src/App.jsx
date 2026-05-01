@@ -7,11 +7,20 @@ function App() {
   const canvasRef = useRef(null);
   const imagesRef = useRef([]);
   const [viewMode, setViewMode] = useState("frames1");
+  const [isLoading, setIsLoading] = useState(true);
 
   const currentFrame = (index, folder) => {
     const frameNumber = String(index).padStart(4, "0");
     return `/${folder}/${frameNumber}.png`;
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     imagesRef.current = [];
@@ -67,7 +76,7 @@ function App() {
       const scrollFraction = Math.min(scrollTop / maxScroll, 1);
       const frameIndex = Math.min(
         FRAME_COUNT - 1,
-        Math.floor(scrollFraction * FRAME_COUNT)
+        Math.floor(scrollFraction * FRAME_COUNT),
       );
 
       requestAnimationFrame(() => {
@@ -91,96 +100,107 @@ function App() {
   }, [viewMode]);
 
   return (
-    <main>
-      <nav className="navbar">
-        <div className="logo">
-          <div className="logo-mark">T</div>
-          <span>Test Energy</span>
+    <>
+      {isLoading && (
+        <div className="page-loader">
+          <div className="loader-card">
+            <div className="loader-logo">T</div>
+            <div className="loader-spinner" />
+            <p>Loading experience...</p>
+          </div>
         </div>
+      )}
+      <main>
+        <nav className="navbar">
+          <div className="logo">
+            <div className="logo-mark">T</div>
+            <span>Test Energy</span>
+          </div>
 
-        <div className="nav-links">
-          <a href="#home">Home</a>
-          <a href="#category">Category</a>
-          <a href="#about">About Us</a>
-        </div>
-      </nav>
+          <div className="nav-links">
+            <a href="#home">Home</a>
+            <a href="#category">Category</a>
+            <a href="#about">About Us</a>
+          </div>
+        </nav>
 
-      <section id="home" className="hero-section">
-        <canvas ref={canvasRef} className="scroll-canvas" />
+        <section id="home" className="hero-section">
+          <canvas ref={canvasRef} className="scroll-canvas" />
 
-        <div className="hero-content">
-          <p className="eyebrow">Oil & Gas Engineering</p>
-          <h1>Precision drilling systems for modern energy operations.</h1>
-          <p className="description">
-            Explore our rig assembly through an interactive scroll experience.
+          <div className="hero-content">
+            <p className="eyebrow">Oil & Gas Engineering</p>
+            <h1>Precision drilling systems for modern energy operations.</h1>
+            <p className="description">
+              Explore our rig assembly through an interactive scroll experience.
+            </p>
+          </div>
+
+          <div className="view-toggle">
+            <p>View mode</p>
+
+            <div className="toggle-buttons">
+              <button
+                className={viewMode === "frames1" ? "active" : ""}
+                onClick={() => setViewMode("frames1")}
+              >
+                Wireframe
+              </button>
+
+              <button
+                className={viewMode === "frames2" ? "active" : ""}
+                onClick={() => setViewMode("frames2")}
+              >
+                Exterior
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="category" className="info-section">
+          <p className="eyebrow">Categories</p>
+          <h2>Industrial drilling technology</h2>
+
+          <div className="cards">
+            <div className="card">
+              <h3>Rig Assembly</h3>
+              <p>Heavy-duty structures designed for safe field deployment.</p>
+            </div>
+
+            <div className="card">
+              <h3>Mechanical Systems</h3>
+              <p>High-performance components for demanding environments.</p>
+            </div>
+
+            <div className="card">
+              <h3>Field Operations</h3>
+              <p>Optimized workflows for oil exploration and production.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="about" className="about-section">
+          <div>
+            <p className="eyebrow">About Us</p>
+            <h2>Engineering reliability for the energy industry.</h2>
+          </div>
+
+          <p>
+            DrillCore Energy builds advanced drilling solutions focused on
+            safety, precision, and operational performance across complex oil
+            field environments.
           </p>
-        </div>
+        </section>
 
-        <div className="view-toggle">
-          <p>View mode</p>
-
-          <div className="toggle-buttons">
-            <button
-              className={viewMode === "frames1" ? "active" : ""}
-              onClick={() => setViewMode("frames1")}
-            >
-              Exterior
-            </button>
-
-            <button
-              className={viewMode === "frames2" ? "active" : ""}
-              onClick={() => setViewMode("frames2")}
-            >
-              Wireframe
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <section id="category" className="info-section">
-        <p className="eyebrow">Categories</p>
-        <h2>Industrial drilling technology</h2>
-
-        <div className="cards">
-          <div className="card">
-            <h3>Rig Assembly</h3>
-            <p>Heavy-duty structures designed for safe field deployment.</p>
+        <footer className="footer">
+          <div className="logo">
+            <div className="logo-mark">Test</div>
+            <span>T Energy</span>
           </div>
 
-          <div className="card">
-            <h3>Mechanical Systems</h3>
-            <p>High-performance components for demanding environments.</p>
-          </div>
-
-          <div className="card">
-            <h3>Field Operations</h3>
-            <p>Optimized workflows for oil exploration and production.</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="about" className="about-section">
-        <div>
-          <p className="eyebrow">About Us</p>
-          <h2>Engineering reliability for the energy industry.</h2>
-        </div>
-
-        <p>
-          DrillCore Energy builds advanced drilling solutions focused on safety,
-          precision, and operational performance across complex oil field
-          environments.
-        </p>
-      </section>
-
-      <footer className="footer">
-        <div className="logo">
-          <div className="logo-mark">Test</div>
-          <span>T Energy</span>
-        </div>
-
-        <p>© 2026 Test. All rights reserved.</p>
-      </footer>
-    </main>
+          <p>© 2026 Test. All rights reserved.</p>
+        </footer>
+      </main>
+    </>
   );
 }
 
