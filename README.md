@@ -1,16 +1,20 @@
-# React + Vite
+# React + Vite Scroll Animation Landing Page
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + Vite landing page with a canvas-based scroll animation, image sequence rendering, view mode switching, and a 2-second initial loader.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React + Vite setup
+- Canvas scroll animation
+- 100 PNG frames per mode
+- Two view modes: `frames1` and `frames2`
+- Initial 2-second lazy loader
+- Responsive layout
+- Dark UI with amber accent color palette
 
-## React Compiler
+## Installation
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Clone or create the project:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm create vite@latest my-project
